@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const Login = () => {
   return (
     <>
@@ -5,7 +7,7 @@ const Login = () => {
         Get in and manage your <span className='text-slate-700'>projects</span>
       </h1>
 
-      <form className='my-10 bg-white shadow rounded-lg px-8 py-6'>
+      <form className='mt-10 mb-6 bg-white shadow rounded-lg px-8 py-6'>
         <div>
           <label
             className='text-gray-600 block text-md font-bold'
@@ -42,6 +44,22 @@ const Login = () => {
           />
         </div>
       </form>
+
+      <nav className='lg:flex lg:justify-between'>
+        <Link
+          className='block text-center my-2 text-slate-500 text-sm'
+          to='register'
+        >
+          Sign up here!
+        </Link>
+
+        <Link
+          className='block text-center my-2 text-slate-500 text-sm'
+          to='forgot-password'
+        >
+          Forgot your password?
+        </Link>
+      </nav>
     </>
   );
 };
