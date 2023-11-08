@@ -36,13 +36,13 @@ const Login = () => {
             placeholder='Your password'
             id='password'
           />
-
-          <input
-            type='submit'
-            value='Log In'
-            className='bg-sky-700 w-full mt-3 py-2 text-white font-bold rounded hover:cursor-pointer hover:bg-sky-800 transition-colors'
-          />
         </div>
+
+        <input
+          type='submit'
+          value='Log In'
+          className='bg-sky-700 w-full mt-3 py-2 text-white font-bold rounded hover:cursor-pointer hover:bg-sky-800 transition-colors'
+        />
       </form>
 
       <nav className='lg:flex lg:justify-between'>
