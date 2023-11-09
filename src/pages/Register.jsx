@@ -1,6 +1,12 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Register = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
+
   return (
     <>
       <h1 className='text-sky-600 font-black text-6xl capitalize'>
@@ -21,6 +27,8 @@ const Register = () => {
             type='text'
             placeholder='Your Name'
             id='name'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div>
@@ -35,6 +43,8 @@ const Register = () => {
             type='email'
             placeholder='email@email.com'
             id='email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
@@ -50,6 +60,8 @@ const Register = () => {
             type='password'
             placeholder='Your password'
             id='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
@@ -65,6 +77,8 @@ const Register = () => {
             type='password'
             placeholder='Repeat your password'
             id='password'
+            value={repeatPassword}
+            onChange={(e) => setRepeatPassword(e.target.value)}
           />
         </div>
 
@@ -76,10 +90,7 @@ const Register = () => {
       </form>
 
       <nav className='lg:flex lg:justify-between'>
-        <Link
-          className='block text-center my-2 text-slate-500 text-sm'
-          to='/'
-        >
+        <Link className='block text-center my-2 text-slate-500 text-sm' to='/'>
           Do you have an account? Log in!
         </Link>
       </nav>
