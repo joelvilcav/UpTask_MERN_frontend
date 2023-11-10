@@ -18,6 +18,22 @@ const Register = () => {
       });
       return;
     }
+
+    if (password !== repeatPassword) {
+      setAlert({
+        msg: 'Both password has to be the same',
+        error: true,
+      });
+      return;
+    }
+
+    if (password.length < 6) {
+      setAlert({
+        msg: 'Your password is too short, add at least 6 characters',
+        error: true,
+      });
+      return;
+    }
   };
 
   const { msg } = alert;
