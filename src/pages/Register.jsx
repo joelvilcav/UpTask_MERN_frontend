@@ -48,6 +48,11 @@ const Register = () => {
         msg: data.msg,
         error: false,
       });
+
+      setName('');
+      setEmail('');
+      setPassword('');
+      setRepeatPassword('');
     } catch (error) {
       setAlert({
         msg: error.response.data.msg,
