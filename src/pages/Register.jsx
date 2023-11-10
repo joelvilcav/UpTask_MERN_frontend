@@ -39,7 +39,7 @@ const Register = () => {
 
     // Register a user with the API
     try {
-      const { data } = await axios.post('http://localhost:4000/api/users', {
+      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
         name,
         email,
         password,
