@@ -1,11 +1,26 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Alert from '../components/Alert';
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
+  const [alert, setAlert] = useState({});
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if ([name, email, password, repeatPassword].includes('')) {
+      setAlert({
+        msg: 'Each field is mandatory',
+        error: true,
+      });
+      return;
+    }
+  };
+
+  const { msg } = alert;
 
   return (
     <>
@@ -14,7 +29,12 @@ const Register = () => {
         <span className='text-slate-700'>projects</span>
       </h1>
 
-      <form className='mt-10 mb-6 bg-white shadow rounded-lg px-8 py-6'>
+      {msg && <Alert alert={alert} />}
+
+      <form
+        className='mt-10 mb-6 bg-white shadow rounded-lg px-8 py-6'
+        onSubmit={handleSubmit}
+      >
         <div>
           <label
             className='text-gray-600 block text-md font-bold'
@@ -68,7 +88,7 @@ const Register = () => {
         <div>
           <label
             className='text-gray-600 block text-md font-bold'
-            htmlFor='password'
+            htmlFor='password2'
           >
             Repeat your password
           </label>
@@ -76,7 +96,7 @@ const Register = () => {
             className='w-full mt-2 p-3 border rounded-xl bg-gray-50'
             type='password'
             placeholder='Repeat your password'
-            id='password'
+            id='password2'
             value={repeatPassword}
             onChange={(e) => setRepeatPassword(e.target.value)}
           />
