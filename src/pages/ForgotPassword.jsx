@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import Alert from '../components/Alert';
 
@@ -17,6 +18,26 @@ const ForgotPassword = () => {
       });
       return;
     }
+
+    try {
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/forgot-password`,
+        {
+          email,
+        }
+      );
+
+      console.log(data)
+      setAlert({
+        msg: data.msg,
+        error: false,
+      });
+    } catch (error) {
+      setAlert({
+        msg: error.response.data.msg,
+        error: true,
+      });
+    }
   };
 
   const { msg } = alert;
@@ -27,7 +48,7 @@ const ForgotPassword = () => {
         Recover your <span className='text-slate-700'>password</span>
       </h1>
 
-      { msg && <Alert alert={alert} />}
+      {msg && <Alert alert={alert} />}
 
       <form
         className='mt-10 mb-6 bg-white shadow rounded-lg px-8 py-6'
@@ -45,6 +66,8 @@ const ForgotPassword = () => {
             type='email'
             placeholder='email@email.com'
             id='email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
@@ -52,7 +75,6 @@ const ForgotPassword = () => {
           type='submit'
           value='Send Intructions'
           className='bg-sky-700 w-full mt-3 py-2 text-white font-bold rounded hover:cursor-pointer hover:bg-sky-800 transition-colors'
-          onChange={(e) => setEmail(e.target.value)}
         />
       </form>
 
