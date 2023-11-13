@@ -5,8 +5,10 @@ import axios from 'axios';
 import Alert from '../components/Alert';
 
 const NewPassword = () => {
+  const [password, setPassword] = useState('');
   const [validToken, setValidToken] = useState(false);
   const [alert, setAlert] = useState({});
+  const [passwordModified, setPasswordModified] = useState(false);
 
   const params = useParams();
   const { token } = params;
@@ -31,6 +33,32 @@ const NewPassword = () => {
     verifyToken();
   }, []);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (password.length < 6) {
+      setAlert({
+        msg: 'The length of the password has to be at least 6 characters',
+        error: true,
+      });
+      return;
+    }
+
+    try {
+      const url = `http://localhost:4000/api/users/forgot-password/${token}`;
+      const { data } = await axios.post(url, { password });
+      setAlert({
+        msg: data.msg,
+        error: false,
+      });
+      setPasswordModified(true);
+    } catch (error) {
+      setAlert({
+        msg: error.response.data.msg,
+        error: true,
+      });
+    }
+  };
+
   const { msg } = alert;
 
   return (
@@ -43,7 +71,10 @@ const NewPassword = () => {
       {msg && <Alert alert={alert} />}
 
       {validToken && (
-        <form className='mt-10 mb-6 bg-white shadow rounded-lg px-8 py-6'>
+        <form
+          className='mt-10 mb-6 bg-white shadow rounded-lg px-8 py-6'
+          onSubmit={handleSubmit}
+        >
           <div>
             <label
               className='text-gray-600 block text-md font-bold'
@@ -56,6 +87,8 @@ const NewPassword = () => {
               type='password'
               placeholder='Write your new password'
               id='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
@@ -65,6 +98,12 @@ const NewPassword = () => {
             className='bg-sky-700 w-full mt-3 py-2 text-white font-bold rounded hover:cursor-pointer hover:bg-sky-800 transition-colors'
           />
         </form>
+      )}
+
+      {passwordModified && (
+        <Link className='block text-center my-2 text-slate-500 text-sm' to='/'>
+          Log in!
+        </Link>
       )}
     </>
   );
