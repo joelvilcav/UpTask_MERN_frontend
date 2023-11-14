@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import useProjects from '../hooks/useProjects';
+import Alert from './Alert';
 
 const ProjectForm = () => {
   const [name, setName] = useState('');
@@ -6,8 +8,32 @@ const ProjectForm = () => {
   const [deadline, setDeadline] = useState('');
   const [client, setClient] = useState('');
 
+  const { alert, showAlert, submitProject } = useProjects();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if ([name, description, deadline, client].includes('')) {
+      showAlert({
+        msg: 'All fields are required',
+        error: true,
+      });
+
+      return;
+    }
+
+    // Passing data to the project context
+    submitProject({ name, description, deadline, client });
+  };
+
+  const { msg } = alert;
+
   return (
-    <form className='bg-white py-10 px-5 md:w-2/3 rounded-lg shadow-lg'>
+    <form
+      className='bg-white py-10 px-5 md:w-2/3 rounded-lg shadow-lg'
+      onSubmit={handleSubmit}
+    >
+      {msg && <Alert alert={alert} />}
       <div className='mb-5'>
         <label className='text-gray-700 font-bold text-sm' htmlFor='name'>
           Project
