@@ -9,6 +9,7 @@ import ConfirmAccount from './pages/ConfirmAccount';
 import Projects from './pages/Projects';
 import NewProject from './pages/NewProject';
 import ProtectedRoute from './layouts/ProtectedRoute';
+import Project from './components/Project';
 
 import { AuthProvider } from './context/AuthProvider';
 import { ProjectsProvider } from './context/ProjectsProvider';
@@ -30,6 +31,7 @@ function App() {
             <Route path='/projects' element={<ProtectedRoute />}>
               <Route index element={<Projects />} />
               <Route path='create-project' element={<NewProject />} />
+              <Route path=':id' element={<Project />} />
             </Route>
           </Routes>
         </ProjectsProvider>
