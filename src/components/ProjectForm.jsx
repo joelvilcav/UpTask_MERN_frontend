@@ -10,7 +10,7 @@ const ProjectForm = () => {
 
   const { alert, showAlert, submitProject } = useProjects();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if ([name, description, deadline, client].includes('')) {
@@ -23,7 +23,12 @@ const ProjectForm = () => {
     }
 
     // Passing data to the project context
-    submitProject({ name, description, deadline, client });
+    await submitProject({ name, description, deadline, client });
+
+    setName('');
+    setDescription('');
+    setDeadline('');
+    setClient('');
   };
 
   const { msg } = alert;
