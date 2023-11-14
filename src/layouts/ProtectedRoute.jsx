@@ -2,9 +2,9 @@ import { Outlet, Navigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
 const ProtectedRoute = () => {
-  const { auth } = useAuth();
-  console.log(auth);
-  return <>{auth._id ? 'Auth' : <Navigate to='/' />}</>;
+  const { auth, loading } = useAuth();
+  if (loading) return 'Loading...';
+  return <>{auth._id ? <Outlet /> : <Navigate to='/' />}</>;
 };
 
 export default ProtectedRoute;
