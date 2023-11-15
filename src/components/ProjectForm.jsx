@@ -39,8 +39,9 @@ const ProjectForm = () => {
     }
 
     // Passing data to the project context
-    await submitProject({ name, description, deadline, client });
+    await submitProject({ id, name, description, deadline, client });
 
+    setId(null);
     setName('');
     setDescription('');
     setDeadline('');

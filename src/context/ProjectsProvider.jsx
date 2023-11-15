@@ -45,6 +45,43 @@ const ProjectsProvider = ({ children }) => {
   };
 
   const submitProject = async (project) => {
+    if (project.id) {
+      editProject(project);
+    } else {
+      newProject(project);
+    }
+  };
+
+  const editProject = async (project) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axiosClient.put(
+        `/projects/${project.id}`,
+        project,
+        config
+      );
+      console.log(data);
+
+      // Synchronize state
+
+      // Show alert
+
+      // Redirect
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const newProject = async (project) => {
     try {
       const token = localStorage.getItem('token');
       if (!token) return;
@@ -97,7 +134,15 @@ const ProjectsProvider = ({ children }) => {
 
   return (
     <ProjectsContext.Provider
-      value={{ projects, alert, showAlert, submitProject, project, getProject, loading }}
+      value={{
+        projects,
+        alert,
+        showAlert,
+        submitProject,
+        project,
+        getProject,
+        loading,
+      }}
     >
       {children}
     </ProjectsContext.Provider>
