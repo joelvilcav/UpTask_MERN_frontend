@@ -1,14 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import useProjects from '../hooks/useProjects';
 import Alert from './Alert';
 
 const ProjectForm = () => {
+  const [id, setId] = useState(null);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [deadline, setDeadline] = useState('');
   const [client, setClient] = useState('');
 
-  const { alert, showAlert, submitProject } = useProjects();
+  const { alert, showAlert, submitProject, project } = useProjects();
+
+  const params = useParams();
+
+  useEffect(() => {
+    if (params.id) {
+      setId(project._id);
+      setName(project.name);
+      setDescription(project.description);
+      setDeadline(project.deadline?.split('T')[0]);
+      setClient(project.client);
+    } else {
+      console.log('New Project');
+    }
+  }, [params]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,7 +111,7 @@ const ProjectForm = () => {
       </div>
       <input
         type='submit'
-        value='Create Project'
+        value={id ? 'Save Changes' : 'Create Project'}
         className='bg-sky-600 w-1/3 p-2 block mx-auto font-bold text-white rounded cursor-pointer hover:bg-sky-700 transition-colors'
       />
     </form>
