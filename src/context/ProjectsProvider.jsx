@@ -72,9 +72,11 @@ const ProjectsProvider = ({ children }) => {
       console.log(data);
 
       // Synchronize state
-      const projectsUpdated = projects.map(projectState => projectState._id === data._id ? data : projectState);
+      const projectsUpdated = projects.map((projectState) =>
+        projectState._id === data._id ? data : projectState
+      );
       setProjects(projectsUpdated);
-      
+
       setAlert({
         msg: 'Project updated propertly',
         error: false,
@@ -142,6 +144,41 @@ const ProjectsProvider = ({ children }) => {
     }
   };
 
+  const deleteProject = async (id) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axiosClient.delete(`/projects/${id}`, config);
+
+      // Synchronize state
+      const projectsUpdated = projects.filter(
+        (projectState) => projectState._id !== id
+      );
+
+      setProjects(projectsUpdated);
+
+      setAlert({
+        msg: data.msg,
+        error: false,
+      });
+
+      setTimeout(() => {
+        setAlert({});
+        navigate('/projects');
+      }, 2500);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <ProjectsContext.Provider
       value={{
@@ -152,6 +189,7 @@ const ProjectsProvider = ({ children }) => {
         project,
         getProject,
         loading,
+        deleteProject,
       }}
     >
       {children}
