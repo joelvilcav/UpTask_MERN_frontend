@@ -3,7 +3,12 @@ import { Dialog, Transition } from '@headlessui/react';
 
 import useProjects from '../hooks/useProjects';
 
+const PRIORITY = ['LOW', 'MEDIUM', 'HIGH'];
+
 const ModalFormularioTarea = () => {
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [priority, setPriority] = useState('');
   const { modalFormTask, handleModalTask } = useProjects();
 
   return (
@@ -72,9 +77,65 @@ const ModalFormularioTarea = () => {
                     as='h3'
                     className='text-lg leading-6 font-bold text-gray-900'
                   >
-                    <div className='text-4xl'>Title</div>
+                    Create Task
                   </Dialog.Title>
-                  <p>Content</p>
+                  <form className='my-10'>
+                    <div className='mb-5'>
+                      <label
+                        className='text-gray-700 font-bold text-sm'
+                        htmlFor='name'
+                      >
+                        Task
+                      </label>
+                      <input
+                        type='text'
+                        id='name'
+                        placeholder='Task name'
+                        className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md'
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </div>
+                    <div className='mb-5'>
+                      <label
+                        className='text-gray-700 font-bold text-sm'
+                        htmlFor='description'
+                      >
+                        Description
+                      </label>
+                      <textarea
+                        id='description'
+                        placeholder='Description of the task'
+                        className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md'
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                      />
+                    </div>
+                    <div className='mb-5'>
+                      <label
+                        className='text-gray-700 font-bold text-sm'
+                        htmlFor='priority'
+                      >
+                        Priority
+                      </label>
+                      <select
+                        id='priority'
+                        className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md'
+                        value={priority}
+                        onChange={(e) => setPriority(e.target.value)}
+                      >
+                        <option value=''>-- Select --</option>
+                        {PRIORITY.map((option) => (
+                          <option key={option}>{option}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <input
+                      type='submit'
+                      className='bg-sky-600 hover:bg-sky-700 w-full p-3 text-white font-bold cursor-pointer transition-colors rounded uppercase text-sm'
+                      value='add task'
+                    />
+                  </form>
                 </div>
               </div>
             </div>
