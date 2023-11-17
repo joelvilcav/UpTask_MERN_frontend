@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useParams } from 'react-router-dom';
 
@@ -15,8 +15,12 @@ const ModalFormTask = () => {
 
   const params = useParams();
 
-  const { modalFormTask, handleModalTask, showAlert, alert, submitTask } =
+  const { modalFormTask, handleModalTask, showAlert, alert, submitTask, task } =
     useProjects();
+
+  useEffect(() => {
+    console.log(task);
+  }, [task]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +40,7 @@ const ModalFormTask = () => {
       deadline,
       project: params.id,
     });
-    
+
     setName('');
     setDescription('');
     setPriority('');
