@@ -2,14 +2,33 @@ import { Fragment, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
 import useProjects from '../hooks/useProjects';
+import Alert from './Alert';
 
 const PRIORITY = ['LOW', 'MEDIUM', 'HIGH'];
 
-const ModalFormularioTarea = () => {
+const ModalFormTask = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState('');
-  const { modalFormTask, handleModalTask } = useProjects();
+
+  const { modalFormTask, handleModalTask, showAlert, alert, submitTask } =
+    useProjects();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if ([name, description, priority].includes('')) {
+      showAlert({
+        msg: 'All fields are required',
+        error: true,
+      });
+      return;
+    }
+
+    submitTask({ name, description, priority });
+  };
+
+  const { msg } = alert;
 
   return (
     <Transition.Root show={modalFormTask} as={Fragment}>
@@ -79,7 +98,10 @@ const ModalFormularioTarea = () => {
                   >
                     Create Task
                   </Dialog.Title>
-                  <form className='my-10'>
+
+                  {msg && <Alert alert={alert} />}
+
+                  <form className='my-10' onSubmit={handleSubmit}>
                     <div className='mb-5'>
                       <label
                         className='text-gray-700 font-bold text-sm'
@@ -146,4 +168,4 @@ const ModalFormularioTarea = () => {
   );
 };
 
-export default ModalFormularioTarea;
+export default ModalFormTask;

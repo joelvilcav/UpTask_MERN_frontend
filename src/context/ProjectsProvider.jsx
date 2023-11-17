@@ -184,6 +184,10 @@ const ProjectsProvider = ({ children }) => {
     setModalFormTask(!modalFormTask);
   };
 
+  const submitTask = async (task) => {
+    console.log(task);
+  };
+
   return (
     <ProjectsContext.Provider
       value={{
@@ -197,6 +201,7 @@ const ProjectsProvider = ({ children }) => {
         deleteProject,
         modalFormTask,
         handleModalTask,
+        submitTask,
       }}
     >
       {children}
