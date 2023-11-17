@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import { useParams } from 'react-router-dom';
 
 import useProjects from '../hooks/useProjects';
 import Alert from './Alert';
@@ -10,6 +11,9 @@ const ModalFormTask = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState('');
+  const [deadline, setDeadline] = useState('');
+
+  const params = useParams();
 
   const { modalFormTask, handleModalTask, showAlert, alert, submitTask } =
     useProjects();
@@ -17,7 +21,7 @@ const ModalFormTask = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if ([name, description, priority].includes('')) {
+    if ([name, description, priority, deadline].includes('')) {
       showAlert({
         msg: 'All fields are required',
         error: true,
@@ -25,7 +29,7 @@ const ModalFormTask = () => {
       return;
     }
 
-    submitTask({ name, description, priority });
+    submitTask({ name, description, priority, deadline, project: params.id });
   };
 
   const { msg } = alert;
@@ -133,6 +137,23 @@ const ModalFormTask = () => {
                         onChange={(e) => setDescription(e.target.value)}
                       />
                     </div>
+
+                    <div className='mb-5'>
+                      <label
+                        className='text-gray-700 font-bold text-sm'
+                        htmlFor='deadline'
+                      >
+                        Deadline
+                      </label>
+                      <input
+                        type='date'
+                        id='deadline'
+                        className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md'
+                        value={deadline}
+                        onChange={(e) => setDeadline(e.target.value)}
+                      />
+                    </div>
+
                     <div className='mb-5'>
                       <label
                         className='text-gray-700 font-bold text-sm'
