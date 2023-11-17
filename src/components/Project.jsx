@@ -5,16 +5,19 @@ import useProjects from '../hooks/useProjects';
 import ModalFormTask from './ModalFormTask';
 import ModalDeleteTask from './ModalDeleteTask';
 import Task from './Task';
+import Alert from './Alert';
 
 const Project = () => {
   const params = useParams();
-  const { project, getProject, loading, handleModalTask } = useProjects();
+  const { project, getProject, loading, handleModalTask, alert } =
+    useProjects();
 
   useEffect(() => {
     getProject(params.id);
   }, []);
 
   const { name } = project;
+  const { msg } = alert;
 
   return loading ? (
     'Loading'
@@ -66,6 +69,13 @@ const Project = () => {
       </button>
 
       <p className='font-bold text-xl mt-10'>Project&apos;s task</p>
+
+      <div className='flex justify-center'>
+        <div className='w-full md:w-1/3 lg:w-1/4'>
+          {msg && <Alert alert={alert} />}
+        </div>
+      </div>
+
       <div className='bg-white shadow mt-10 rounded-lg'>
         {project.tasks?.length ? (
           project.tasks?.map((task) => <Task key={task._id} task={task} />)
