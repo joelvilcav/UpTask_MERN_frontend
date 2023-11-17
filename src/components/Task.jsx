@@ -3,7 +3,7 @@ import useProjects from '../hooks/useProjects';
 
 const Task = ({ task }) => {
   const { name, description, deadline, priority, status, _id } = task;
-  const { handleModalEditTask } = useProjects();
+  const { handleModalEditTask, handleModalDeleteTask } = useProjects();
 
   return (
     <div className='border-b p-5 flex justify-between items-center'>
@@ -31,7 +31,10 @@ const Task = ({ task }) => {
           </button>
         )}
 
-        <button className='bg-red-600 px-4 py-3 text-white text-sm rounded-lg'>
+        <button
+          onClick={() => handleModalDeleteTask(task)}
+          className='bg-red-600 px-4 py-3 text-white text-sm rounded-lg'
+        >
           Delete
         </button>
       </div>
