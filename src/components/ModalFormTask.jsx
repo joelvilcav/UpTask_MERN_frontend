@@ -48,6 +48,7 @@ const ModalFormTask = () => {
     }
 
     await submitTask({
+      id,
       name,
       description,
       priority,
@@ -55,6 +56,7 @@ const ModalFormTask = () => {
       project: params.id,
     });
 
+    setId('');
     setName('');
     setDescription('');
     setPriority('');
