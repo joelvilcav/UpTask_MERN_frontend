@@ -8,6 +8,7 @@ import Alert from './Alert';
 const PRIORITY = ['LOW', 'MEDIUM', 'HIGH'];
 
 const ModalFormTask = () => {
+  const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState('');
@@ -19,7 +20,20 @@ const ModalFormTask = () => {
     useProjects();
 
   useEffect(() => {
-    console.log(task);
+    if (task?._id) {
+      setId(task._id);
+      setName(task.name);
+      setDescription(task.description);
+      setPriority(task.priority);
+      setDeadline(task.deadline?.split('T')[0]);
+      return;
+    }
+
+    setId('');
+    setName('');
+    setDescription('');
+    setPriority('');
+    setDeadline('');
   }, [task]);
 
   const handleSubmit = async (e) => {
@@ -115,7 +129,7 @@ const ModalFormTask = () => {
                     as='h3'
                     className='text-lg leading-6 font-bold text-gray-900'
                   >
-                    Create Task
+                    {id ? 'Edit task' : 'Create Task'}
                   </Dialog.Title>
 
                   {msg && <Alert alert={alert} />}
@@ -191,7 +205,7 @@ const ModalFormTask = () => {
                     <input
                       type='submit'
                       className='bg-sky-600 hover:bg-sky-700 w-full p-3 text-white font-bold cursor-pointer transition-colors rounded uppercase text-sm'
-                      value='add task'
+                      value={id ? 'Save changes' : 'Create Task'}
                     />
                   </form>
                 </div>
