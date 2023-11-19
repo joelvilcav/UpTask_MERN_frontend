@@ -48,7 +48,7 @@ const FormCollaborator = () => {
       <input
         type='submit'
         className='mt-5 bg-sky-600 hover:bg-sky-700 w-full p-3 text-white font-bold cursor-pointer transition-colors rounded uppercase text-sm'
-        value='Look collaborator'
+        value='Search collaborator'
       />
     </form>
   );
