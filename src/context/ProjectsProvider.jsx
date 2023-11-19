@@ -355,7 +355,6 @@ const ProjectsProvider = ({ children }) => {
       });
 
       setCollaborator({});
-      setAlert({});
     } catch (error) {
       setAlert({
         msg: error.response.data.msg,
@@ -369,8 +368,41 @@ const ProjectsProvider = ({ children }) => {
     setCollaborator(collaborator);
   };
 
-  const deleteCollaborator = () => {
-    console.log(collaborator);
+  const deleteCollaborator = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axiosClient.post(
+        `/projects/delete-collaborator/${project._id}`,
+        { id: collaborator._id },
+        config
+      );
+
+      const projectUpdated = { ...project };
+      projectUpdated.collaborators = projectUpdated.collaborators.filter(
+        (collaboratorState) => collaboratorState._id !== collaborator._id
+      );
+
+      setProject(projectUpdated);
+
+      setAlert({
+        msg: data.msg,
+        error: false,
+      });
+
+      setCollaborator({});
+      setModalDeleteCollaborator(false);
+    } catch (error) {
+      console.log(error.response);
+    }
   };
 
   return (
