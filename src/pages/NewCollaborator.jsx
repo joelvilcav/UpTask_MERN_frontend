@@ -3,9 +3,10 @@ import { useEffect } from 'react';
 import FormCollaborator from '../components/FormCollaborator';
 import useProjects from '../hooks/useProjects';
 import { useParams } from 'react-router-dom';
+import Alert from '../components/Alert';
 
 const NewCollaborator = () => {
-  const { getProject, project, loading, collaborator, addCollaborator } =
+  const { getProject, project, loading, collaborator, addCollaborator, alert } =
     useProjects();
   const params = useParams();
 
@@ -13,7 +14,7 @@ const NewCollaborator = () => {
     getProject(params.id);
   }, []);
 
-  /* if (loading) return 'Loading...'; */
+  if (!project._id) return <Alert alert={alert} />;
 
   return (
     <>
@@ -36,7 +37,7 @@ const NewCollaborator = () => {
                 <button
                   type='button'
                   className='bg-slate-500 px-5 py-2 rounded-lg uppercase text-white font-bold text-sm'
-                  onClick={() => addCollaborator({email: collaborator.email})}
+                  onClick={() => addCollaborator({ email: collaborator.email })}
                 >
                   Add collaborator
                 </button>
