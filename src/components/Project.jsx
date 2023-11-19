@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import useProjects from '../hooks/useProjects';
 import ModalFormTask from './ModalFormTask';
 import ModalDeleteTask from './ModalDeleteTask';
+import ModalDeleteCollaborator from './ModalDeleteCollaborator';
 import Task from './Task';
 import Alert from './Alert';
 import Collaborator from './Collaborator';
@@ -15,12 +16,11 @@ const Project = () => {
 
   useEffect(() => {
     getProject(params.id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { name } = project;
   const { msg } = alert;
-
-  console.log(project);
 
   return loading ? (
     'Loading'
@@ -111,6 +111,7 @@ const Project = () => {
 
       <ModalFormTask />
       <ModalDeleteTask />
+      <ModalDeleteCollaborator />
     </>
   );
 };

@@ -2,15 +2,16 @@ import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import useProjects from '../hooks/useProjects';
 
-const ModalDeleteTask = () => {
-  const { modalDeleteTask, handleModalDeleteTask, deleteTask } = useProjects();
+const ModalDeleteCollaborator = () => {
+  const { handleModalDeleteCollaborator, modalDeleteCollaborator, deleteCollaborator } =
+    useProjects();
 
   return (
-    <Transition.Root show={modalDeleteTask} as={Fragment}>
+    <Transition.Root show={modalDeleteCollaborator} as={Fragment}>
       <Dialog
         as='div'
         className='fixed z-10 inset-0 overflow-y-auto'
-        onClose={handleModalDeleteTask}
+        onClose={handleModalDeleteCollaborator}
       >
         <div className='flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
           <Transition.Child
@@ -47,7 +48,7 @@ const ModalDeleteTask = () => {
                 <button
                   type='button'
                   className='bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                  onClick={handleModalDeleteTask}
+                  onClick={handleModalDeleteCollaborator}
                 >
                   <span className='sr-only'>Close</span>
                   <svg
@@ -85,7 +86,7 @@ const ModalDeleteTask = () => {
                     as='h3'
                     className='text-lg leading-6 font-bold text-gray-900'
                   >
-                    Delete task
+                    Delete collaborator
                   </Dialog.Title>
                   <div className='mt-2'>
                     <p className='text-sm text-gray-900'>
@@ -96,14 +97,14 @@ const ModalDeleteTask = () => {
               </div>
               <div className='mt-5 sm:mt-4 sm:flex sm:flex-row-reverse'>
                 <button
-                  onClick={deleteTask}
+                  onClick={deleteCollaborator}
                   type='button'
                   className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm'
                 >
                   Eliminar
                 </button>
                 <button
-                  onClick={handleModalDeleteTask}
+                  onClick={handleModalDeleteCollaborator}
                   type='button'
                   className='mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm'
                 >
@@ -119,4 +120,4 @@ const ModalDeleteTask = () => {
   );
 };
 
-export default ModalDeleteTask;
+export default ModalDeleteCollaborator;
