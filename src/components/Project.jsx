@@ -6,6 +6,7 @@ import ModalFormTask from './ModalFormTask';
 import ModalDeleteTask from './ModalDeleteTask';
 import Task from './Task';
 import Alert from './Alert';
+import Collaborator from './Collaborator';
 
 const Project = () => {
   const params = useParams();
@@ -18,6 +19,8 @@ const Project = () => {
 
   const { name } = project;
   const { msg } = alert;
+
+  console.log(project);
 
   return loading ? (
     'Loading'
@@ -92,6 +95,18 @@ const Project = () => {
         >
           Add
         </Link>
+      </div>
+
+      <div className='bg-white shadow mt-10 rounded-lg'>
+        {project.collaborators?.length ? (
+          project.collaborators?.map((collaborator) => (
+            <Collaborator key={collaborator._id} collaborator={collaborator} />
+          ))
+        ) : (
+          <p className='text-center my-5 p-10'>
+            There are no collaborators yet
+          </p>
+        )}
       </div>
 
       <ModalFormTask />
