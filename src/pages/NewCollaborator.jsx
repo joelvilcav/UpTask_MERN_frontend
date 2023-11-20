@@ -12,6 +12,7 @@ const NewCollaborator = () => {
 
   useEffect(() => {
     getProject(params.id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!project._id) return <Alert alert={alert} />;
@@ -30,7 +31,7 @@ const NewCollaborator = () => {
       ) : (
         collaborator?._id && (
           <div className='flex justify-center mt-10'>
-            <div className='bg-white py-10 px-5 md:w-1/2 rounded-lg shadow'>
+            <div className='bg-white py-10 px-5 md:w-1/2 rounded-lg shadow w-full'>
               <h2 className='text-center mb-10 text-2xl font-bold'>User:</h2>
               <div className='flex justify-between items-center'>
                 <p>{collaborator.name}</p>
