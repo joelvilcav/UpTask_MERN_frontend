@@ -1,10 +1,18 @@
 import { Link } from 'react-router-dom';
 import useProjects from '../hooks/useProjects';
+import useAuth from '../hooks/useAuth';
 import Searcher from './Searcher';
 
 const Header = () => {
+  const { handleSearcher, logOutProjects } = useProjects();
+  const { logOutAuth } = useAuth();
 
-  const { handleSearcher } = useProjects();
+  const handleLogOut = () => {
+    logOutAuth();
+    logOutProjects();
+    localStorage.removeItem('token');
+  };
+
   return (
     <header className='px-4 py-4 bg-white border-b'>
       <div className='md:flex md:justify-between'>
@@ -13,7 +21,11 @@ const Header = () => {
         </h2>
 
         <div className='flex flex-col md:flex-row items-center gap-4'>
-          <button type='button' className='font-bold uppercase' onClick={handleSearcher}>
+          <button
+            type='button'
+            className='font-bold uppercase'
+            onClick={handleSearcher}
+          >
             Search project
           </button>
           <Link to='/projects' className='font-bold uppercase'>
@@ -22,6 +34,7 @@ const Header = () => {
           <button
             type='button'
             className='text-white text-sm bg-sky-600 p-3 rounded-md font-bold'
+            onClick={handleLogOut}
           >
             Log out
           </button>

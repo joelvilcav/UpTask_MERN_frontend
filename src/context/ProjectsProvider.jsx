@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
+import useAuth from '../hooks/useAuth';
 
 let socket;
 
@@ -20,6 +21,7 @@ const ProjectsProvider = ({ children }) => {
   const [modalDeleteCollaborator, setModalDeleteCollaborator] = useState(false);
   const [searcher, setSearcher] = useState(false);
 
+  const { auth } = useAuth()
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,7 +45,7 @@ const ProjectsProvider = ({ children }) => {
     };
 
     getProjects();
-  }, []);
+  }, [auth]);
 
   useEffect(() => {
     socket = io(import.meta.env.VITE_BACKEND_URL);
@@ -484,6 +486,12 @@ const ProjectsProvider = ({ children }) => {
     setProject(projectUpdated);
   };
 
+  const logOutProjects = () => {
+    setProjects([]);
+    setProject({});
+    setAlert({});
+  };
+
   return (
     <ProjectsContext.Provider
       value={{
@@ -517,6 +525,7 @@ const ProjectsProvider = ({ children }) => {
         deleteTaskProject,
         updateTaskProject,
         changeStatusTask,
+        logOutProjects,
       }}
     >
       {children}
