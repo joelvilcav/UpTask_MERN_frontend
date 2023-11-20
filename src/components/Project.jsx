@@ -16,7 +16,8 @@ const Project = () => {
   const params = useParams();
   const admin = useAdmin();
 
-  const { project, getProject, loading, handleModalTask } = useProjects();
+  const { project, getProject, loading, handleModalTask, submitTaskProject } =
+    useProjects();
 
   useEffect(() => {
     getProject(params.id);
@@ -26,14 +27,16 @@ const Project = () => {
   useEffect(() => {
     socket = io(import.meta.env.VITE_BACKEND_URL);
     socket.emit('open project', params.id);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    socket.on('response', (person) => {
-      console.log(person)
-    })
-  })
+    socket.on('task added', (newTask) => {
+      if (newTask.project === project._id) {
+        submitTaskProject(newTask);
+      }
+    });
+  });
 
   const { name } = project;
 
