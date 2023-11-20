@@ -13,8 +13,7 @@ const Project = () => {
   const params = useParams();
   const admin = useAdmin();
 
-  const { project, getProject, loading, handleModalTask } =
-    useProjects();
+  const { project, getProject, loading, handleModalTask } = useProjects();
 
   useEffect(() => {
     getProject(params.id);
@@ -22,7 +21,7 @@ const Project = () => {
   }, []);
 
   const { name } = project;
-  console.log(admin);
+  console.log(project);
 
   if (loading) return 'Loading...';
 
