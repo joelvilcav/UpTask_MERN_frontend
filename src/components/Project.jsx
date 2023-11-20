@@ -7,14 +7,13 @@ import ModalFormTask from './ModalFormTask';
 import ModalDeleteTask from './ModalDeleteTask';
 import ModalDeleteCollaborator from './ModalDeleteCollaborator';
 import Task from './Task';
-import Alert from './Alert';
 import Collaborator from './Collaborator';
 
 const Project = () => {
   const params = useParams();
   const admin = useAdmin();
 
-  const { project, getProject, loading, handleModalTask, alert } =
+  const { project, getProject, loading, handleModalTask } =
     useProjects();
 
   useEffect(() => {
@@ -23,7 +22,6 @@ const Project = () => {
   }, []);
 
   const { name } = project;
-  const { msg } = alert;
   console.log(admin);
 
   if (loading) return 'Loading...';
