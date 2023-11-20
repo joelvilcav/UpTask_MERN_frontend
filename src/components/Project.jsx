@@ -23,6 +23,7 @@ const Project = () => {
     handleModalTask,
     submitTaskProject,
     deleteTaskProject,
+    updateTaskProject,
   } = useProjects();
 
   useEffect(() => {
@@ -48,6 +49,12 @@ const Project = () => {
         deleteTaskProject(taskDeleted);
       }
     });
+
+    socket.on('task updated', taskUpdated => {
+      if (taskUpdated.project._id === project._id) {
+        updateTaskProject(taskUpdated);
+      }
+    })
   });
 
   const { name } = project;
