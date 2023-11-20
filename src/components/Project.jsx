@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import io from 'socket.io-client';
 
 import useProjects from '../hooks/useProjects';
 import useAdmin from '../hooks/useAdmin';
@@ -8,6 +9,8 @@ import ModalDeleteTask from './ModalDeleteTask';
 import ModalDeleteCollaborator from './ModalDeleteCollaborator';
 import Task from './Task';
 import Collaborator from './Collaborator';
+
+let socket;
 
 const Project = () => {
   const params = useParams();
@@ -19,6 +22,18 @@ const Project = () => {
     getProject(params.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    socket = io(import.meta.env.VITE_BACKEND_URL);
+    socket.emit('open project', params.id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    socket.on('response', (person) => {
+      console.log(person)
+    })
+  })
 
   const { name } = project;
 
