@@ -16,8 +16,14 @@ const Project = () => {
   const params = useParams();
   const admin = useAdmin();
 
-  const { project, getProject, loading, handleModalTask, submitTaskProject } =
-    useProjects();
+  const {
+    project,
+    getProject,
+    loading,
+    handleModalTask,
+    submitTaskProject,
+    deleteTaskProject,
+  } = useProjects();
 
   useEffect(() => {
     getProject(params.id);
@@ -34,6 +40,12 @@ const Project = () => {
     socket.on('task added', (newTask) => {
       if (newTask.project === project._id) {
         submitTaskProject(newTask);
+      }
+    });
+
+    socket.on('task deleted', (taskDeleted) => {
+      if (taskDeleted.project === project._id) {
+        deleteTaskProject(taskDeleted);
       }
     });
   });

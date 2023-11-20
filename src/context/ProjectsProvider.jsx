@@ -296,14 +296,11 @@ const ProjectsProvider = ({ children }) => {
       });
       console.log(data);
 
-      const projectUpdated = { ...project };
-      projectUpdated.tasks = projectUpdated.tasks.filter(
-        (taskState) => taskState._id !== task._id
-      );
-
-      setProject(projectUpdated);
-
       setModalDeleteTask(false);
+
+      // SOCKET
+      socket.emit('delete task', task);
+
       setTask({});
       setTimeout(() => {
         setAlert({});
@@ -467,6 +464,15 @@ const ProjectsProvider = ({ children }) => {
     setProject(projectUpdated);
   };
 
+  const deleteTaskProject = (task) => {
+    const projectUpdated = { ...project };
+    projectUpdated.tasks = projectUpdated.tasks.filter(
+      (taskState) => taskState._id !== task._id
+    );
+
+    setProject(projectUpdated);
+  };
+
   return (
     <ProjectsContext.Provider
       value={{
@@ -497,6 +503,7 @@ const ProjectsProvider = ({ children }) => {
         searcher,
         handleSearcher,
         submitTaskProject,
+        deleteTaskProject,
       }}
     >
       {children}
