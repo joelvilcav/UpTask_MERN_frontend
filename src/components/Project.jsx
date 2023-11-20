@@ -24,6 +24,7 @@ const Project = () => {
     submitTaskProject,
     deleteTaskProject,
     updateTaskProject,
+    changeStatusTask,
   } = useProjects();
 
   useEffect(() => {
@@ -50,11 +51,17 @@ const Project = () => {
       }
     });
 
-    socket.on('task updated', taskUpdated => {
+    socket.on('task updated', (taskUpdated) => {
       if (taskUpdated.project._id === project._id) {
         updateTaskProject(taskUpdated);
       }
-    })
+    });
+
+    socket.on('new status', (newStatusTask) => {
+      if (newStatusTask.project._id === project._id) {
+        changeStatusTask(newStatusTask);
+      }
+    });
   });
 
   const { name } = project;
