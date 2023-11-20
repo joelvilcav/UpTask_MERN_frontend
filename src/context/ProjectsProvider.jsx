@@ -142,6 +142,7 @@ const ProjectsProvider = ({ children }) => {
 
       const { data } = await axiosClient(`/projects/${id}`, config);
       setProject(data);
+      setAlert({});
     } catch (error) {
       setAlert({
         msg: error.response.data.msg,
@@ -355,6 +356,9 @@ const ProjectsProvider = ({ children }) => {
       });
 
       setCollaborator({});
+      setTimeout(() => {
+        setAlert({});
+      }, 2500);
     } catch (error) {
       setAlert({
         msg: error.response.data.msg,
@@ -400,6 +404,9 @@ const ProjectsProvider = ({ children }) => {
 
       setCollaborator({});
       setModalDeleteCollaborator(false);
+      setTimeout(() => {
+        setAlert({});
+      }, 2500);
     } catch (error) {
       console.log(error.response);
     }

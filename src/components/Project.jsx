@@ -16,14 +16,16 @@ const Project = () => {
 
   useEffect(() => {
     getProject(params.id);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { name } = project;
   const { msg } = alert;
 
-  return loading ? (
-    'Loading'
+  if (loading) return 'Loading...';
+
+  return msg && alert.error ? (
+    <Alert alert={alert} />
   ) : (
     <>
       <div className='flex justify-between'>
