@@ -13,7 +13,7 @@ const Login = () => {
 
   const { setAuth } = useAuth();
   const navigate = useNavigate();
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,7 +33,7 @@ const Login = () => {
       setAlert({});
       localStorage.setItem('token', data.tokenJwt);
       setAuth(data);
-      navigate('projects')
+      navigate('projects');
     } catch (error) {
       setAlert({
         msg: error.response.data.msg,
@@ -112,6 +112,14 @@ const Login = () => {
           Forgot your password?
         </Link>
       </nav>
+
+      <p className='block text-center my-2 text-slate-500 text-sm'>
+        Currently this app is not sending emails, but you can test now with
+        users pre-registered:
+        <span className='font-semibold'>{' '}email@email.com</span> and{' '}
+        <span className='font-semibold'>correo@correo.com</span>, both accounts
+        has the password: <span className='font-semibold'>password</span>
+      </p>
     </>
   );
 };
